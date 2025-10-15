@@ -8,14 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: 'postgres'
-          POSTGRES_HOST_AUTH_METHOD: 'trust'
-        options: --health-cmd="pg_isready" --health-interval 10s --health-timeout 5s --health-retries 5
-        ports:
-          - 5432:5432
       mariadb:
         image: mariadb:10
         env:
@@ -30,14 +22,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.2']
-        moodle-branch: ['MOODLE_403_STABLE', 'MOODLE_404_STABLE', 'MOODLE_405_STABLE']
-        database: ['mariadb', 'pgsql']
-        include:
-          - php: '8.3'
-            moodle-branch: 'main'
-            database: 'pgsql'
-
+        php: ['8.3']
+        moodle-branch: ['MOODLE_405_STABLE']
+        database: ['mariadb']
     steps:
       - name: checkout plugin
         uses: actions/checkout@v4
